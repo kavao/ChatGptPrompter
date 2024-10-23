@@ -1,0 +1,38 @@
+name: Release Chrome Plugin
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Get version number
+      id: get_version
+      run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+    - name: Update manifest file
+      run: |
+        sed -i 's/"version": ".*"/"version": "${{ steps.get_version.outputs.VERSION }}"/' src/manifest.json
+        git config user.name github-actions
+        git config user.email github-actions@github.com
+        git add src/manifest.json
+        git commit -m "Update version to ${{ steps.get_version.outputs.VERSION }}"
+        git push
+
+    - name: Create ZIP file
+      run: |
+        cd src
+        zip -r ../chrome-plugin-${{ steps.get_version.outputs.VERSION }}.zip . -x "*.git*"
+
+    - name: Create release and upload ZIP
+      uses: softprops/action-gh-release@v1
+      with:
+        files: chrome-plugin-${{ steps.get_version.outputs.VERSION }}.zip
+        name: Release ${{ steps.get_version.outputs.VERSION }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

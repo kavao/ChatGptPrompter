@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>ChatGPT Prompt Manager</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <div class="top-buttons">
+      <button id="openChatGPT" class="icon-button" title="Open ChatGPT">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+      </button>
+      <button id="helpButton" class="icon-button" title="Help">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+          <line x1="12" y1="17" x2="12" y2="17"></line>
+        </svg>
+      </button>
+      <button id="openOptions" class="icon-button" title="Settings">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
+      </button>
+    </div>
+
+    <div class="columns">
+      <div class="column">
+        <div id="savedStylesLabel" class="label">保存されたスタイル (複数選択可能)</div>
+        <select id="styleSelect" multiple></select>
+
+        <div class="input-container">
+          <input type="text" id="styleTitleInput" placeholder="スタイルタイトル">
+          <button class="clear-button" data-target="styleTitleInput">×</button>
+        </div>
+
+        <div class="input-container">
+          <textarea id="tempPromptArea" placeholder="一時的なプロンプト"></textarea>
+          <button class="clear-button" data-target="tempPromptArea">×</button>
+        </div>
+
+        <div class="button-container">
+          <button id="saveStyle" class="green-button">スタイルを保存</button>
+          <button id="deleteStyle" class="green-button">スタイルを削除</button>
+        </div>
+
+        <div class="button-container">
+          <button id="loadToTemp" class="green-button">スタイルを編集</button>
+        </div>
+      </div>
+
+      <div class="column">
+        <div id="finalPromptLabel" class="label">最終プロンプト</div>
+        <div id="finalPrompt" class="final-content"></div>
+
+        <div class="button-container">
+          <button id="injectPrompt" class="green-button">ChatGPTに注入</button>
+          <button id="fetchPrompt" class="green-button">ChatGPTから取得</button>
+        </div>
+
+        <div class="button-container">
+          <button id="clearPrompts" class="red-button">プロンプトをクリア</button>
+          <button id="executePrompt" class="green-button">ChatGPTで実行</button>
+        </div>
+
+        <!--div class="button-container">
+          <select id="generateCount">
+            <option value="2">2枚</option>
+            <option value="3">3枚</option>
+            <option value="4">4枚</option>
+            <option value="5">5枚</option>
+            <option value="10">10枚</option>
+          </select>
+          <button id="generateMultiple">複数枚生成</button>
+        </div-->
+
+        <div class="button-container">
+          <button id="exportStyles" class="green-button">スタイルをエクスポート</button>
+          <button id="importStyles" class="green-button">スタイルをインポート</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="helpModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <!-- Help content will be dynamically inserted here -->
+    </div>
+  </div>
+
+  <input type="file" id="importFile" style="display: none;">
+  <script src="popup.js"></script>
+</body>
+</html>
