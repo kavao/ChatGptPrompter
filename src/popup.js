@@ -25,10 +25,6 @@ document.addEventListener('DOMContentLoaded', function() {
   const closeButton = helpModal ? helpModal.querySelector('.close') : null;
   const clearPromptsButton = getElement('clearPrompts');
   const executePromptButton = getElement('executePrompt');
-  // const generateSingleButton = getElement('generateSingle');
-  // const generateMultipleButton = getElement('generateMultiple');
-  // const generateCountSelect = getElement('generateCount');
-  // const generateCountOptions = [2, 3, 4, 5, 10];
 
   let currentLanguage = 'ja';  // デフォルト言語を日本語に設定
 
@@ -43,18 +39,13 @@ document.addEventListener('DOMContentLoaded', function() {
       importStyles: "Import Styles",
       savedStyles: "Saved Styles (Multiple selection possible)",
       tempPrompt: "Temporary Prompt",
-      // tempExclude: "Temporary Exclude",
       finalPrompt: "Final Prompt",
-      // finalExclude: "Final Exclude",
       clearPrompts: "Clear Prompts",
-      // generateSingle: "Generate Single",
       loadToTemp: "Edit Style",
       styleTitleInput: "Style Title",
       openChatGPT: "Open ChatGPT",
       help: "Help",
       openOptions: "Open Settings",
-      // generateMultiple: "Generate Multiple",
-      // generateCount: (count) => `${count} image${count > 1 ? 's' : ''}`
     },
     ja: {
       saveStyle: "スタイルを保存",
@@ -66,18 +57,13 @@ document.addEventListener('DOMContentLoaded', function() {
       importStyles: "スタイルをインポート",
       savedStyles: "保存されたスタイル (複数選択可能)",
       tempPrompt: "一時的なプロンプト",
-      // tempExclude: "一時的な除外要素",
       finalPrompt: "最終プロンプト",
-      // finalExclude: "最終除外要素",
       clearPrompts: "プロンプトをクリア",
-      // generateSingle: "1枚生成",
       loadToTemp: "スタイルを編集",
       styleTitleInput: "スタイルタイトル",
       openChatGPT: "ChatGPTを開く",
       help: "ヘルプ",
       openOptions: "設定を開く",
-      // generateMultiple: "複数枚生成",
-      // generateCount: (count) => `${count}枚`
     }
   };
 
@@ -119,9 +105,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const formState = {
       styleSelect: Array.from(styleSelect.selectedOptions).map(option => option.value),
       tempPromptArea: tempPromptArea.value,
-      // tempExcludeArea: tempExcludeArea.value,
       styleTitleInput: styleTitleInput.value,
-      // generateCountSelect: generateCountSelect.value,
     };
     chrome.storage.local.set({ formState: formState });
     updateFinalPrompt();
@@ -131,9 +115,7 @@ document.addEventListener('DOMContentLoaded', function() {
     chrome.storage.local.get(['formState'], function(result) {
       if (result.formState) {
         tempPromptArea.value = result.formState.tempPromptArea || '';
-        // tempExcludeArea.value = result.formState.tempExcludeArea || '';
         styleTitleInput.value = result.formState.styleTitleInput || '';
-        // generateCountSelect.value = result.formState.generateCountSelect || '';
         if (result.formState.styleSelect) {
           result.formState.styleSelect.forEach(value => {
             const option = styleSelect.querySelector(`option[value="${value}"]`);
@@ -158,20 +140,6 @@ document.addEventListener('DOMContentLoaded', function() {
       updateLabels();
     });
   }
-  
-  // function updateGenerateCountOptions(lang) {
-  //   const select = document.getElementById('generateCount');
-  //   select.innerHTML = ''; // 既存のオプションをクリア
-    
-  //   generateCountOptions.forEach(count => {
-  //     const option = document.createElement('option');
-  //     option.value = count;
-  //     option.textContent = translations[lang].generateCount
-  //       ? translations[lang].generateCount(count)
-  //       : `${count} ${lang === 'ja' ? '枚' : 'image(s)'}`;
-  //     select.appendChild(option);
-  //   });
-  // }
 
   function updateLanguage(lang) {
     currentLanguage = lang;
@@ -180,7 +148,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const elementsToUpdate = {
       'savedStylesLabel': 'savedStyles',
       'finalPromptLabel': 'finalPrompt',
-      // 'finalExcludeLabel': 'finalExclude',
       'saveStyle': 'saveStyle',
       'deleteStyle': 'deleteStyle',
       'injectPrompt': 'injectPrompt',
@@ -188,10 +155,7 @@ document.addEventListener('DOMContentLoaded', function() {
       'exportStyles': 'exportStyles',
       'importStyles': 'importStyles',
       'clearPrompts': 'clearPrompts',
-      // 'generateSingle': 'generateSingle',
       'loadToTemp': 'loadToTemp',
-      // 'generateMultiple':'generateMultiple',
-      // 'generateCount':'generateCount'
     };
   
     for (const [elementId, translationKey] of Object.entries(elementsToUpdate)) {
@@ -214,8 +178,6 @@ document.addEventListener('DOMContentLoaded', function() {
         element.title = translations[lang][translationKey];
       }
     }
-
-    // updateGenerateCountOptions(lang);
   }
 
   // 言語設定を読み込み、UIを更新する
@@ -401,22 +363,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function setHelpContent() {
     const helpContent = `
-    <h2>How to use ChatGPT Prompt Manager / ChatGPT Prompt Manager の使い方</h2>
-    <h2>How to use ChatGPT Prompt Manager / ChatGPT Prompt Manager の使い方</h2>
-    <h3>English</h3>
-    <p>1. Save your favorite prompts as styles by entering a style title, temporary prompt elements.</p>
-    <p>2. Select multiple styles and click "Load to Temporary Prompt" to combine them.</p>
-    <p>3. Use temporary prompts for one-time additions...</p>
-    <p>4. You can select multiple styles by holding down the Ctrl key while clicking.</p>
-    <p>5. Use "Clear Prompts" to reset both prompt fields.</p>
-    <p>6. Click "Generate Single" to create a single image with the current settings.</p>
-    <h3>日本語</h3>
+    <h2>ChatGPT Prompt Manager の使い方</h2>
     <p>1. スタイルタイトル、一時的なプロンプトを入力して、お気に入りのプロンプトをスタイルとして保存します。</p>
     <p>2. 複数のスタイルを選択し、"スタイルを一時的なプロンプトに入れる"をクリックして組み合わせます。</p>
     <p>3. 一時的なプロンプトを使用して一回限りの追加を行います...</p>
     <p>4. Ctrlキーを押しながらクリックすることで、複数のスタイルを選択したり、選択を解除したりできます。</p>
     <p>5. "プロンプトをクリア"を使用して、プロンプトをリセットします。</p>
-    <p>6. "1枚生成"をクリックして、現在の設定で1枚の画像を生成します。</p>
+    <p>6. "ChatGPTで実行"をクリックして、現在の設定でプロンプトの実行がおこなわれます。</p>
   `;
     
   
@@ -450,9 +403,7 @@ document.addEventListener('DOMContentLoaded', function() {
           } else if (response && response.success) {
             // ローカルのプロンプト表示もクリア
             tempPromptArea.value = '';
-            // tempExcludeArea.value = '';
             finalPrompt.textContent = '';
-            // finalExclude.textContent = '';
             updateFinalPrompt();
           } else {
             showError('clearFailed');
@@ -493,60 +444,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   if (executePromptButton) executePromptButton.addEventListener('click', executePrompt);
-
-  // generateSingleButton.addEventListener('click', function() {
-  //   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-  //     if (tabs[0]) {
-  //       chrome.tabs.sendMessage(tabs[0].id, {action: "generateSingle"}, function(response) {
-  //         if (chrome.runtime.lastError) {
-  //           console.error('Runtime error:', chrome.runtime.lastError);
-  //           showError(`通信エラー: ${chrome.runtime.lastError.message}`);
-  //         } else if (!response) {
-  //           console.error('No response from content script');
-  //           showError('コンテンツスクリプトからの応答がありません');
-  //         } else if (!response.success) {
-  //           console.error('Generation failed:', response.error);
-  //           showError(`生成失敗: ${response.error || '不明なエラー'}`);
-  //         } else {
-  //           console.log('Generation started successfully');
-  //           // 成功時の処理（必要に応じて）
-  //           // 例: showSuccess('画像生成が開始されました');
-  //         }
-  //       });
-  //     } else {
-  //       showError('アクティブなタブが見つかりません');
-  //     }
-  //   });
-  // });
-
-  // generateMultipleButton.addEventListener('click', function() {
-  //   const count = parseInt(generateCountSelect.value);
-  //   generateMultipleImages(count);
-  // });
-
-  // function generateMultipleImages(count) {
-  //   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-  //     if (tabs[0]) {
-  //       chrome.tabs.sendMessage(tabs[0].id, {action: "generateMultiple", count: count}, function(response) {
-  //         if (chrome.runtime.lastError) {
-  //           console.error('Runtime error:', chrome.runtime.lastError);
-  //           showError(`通信エラー: ${chrome.runtime.lastError.message}`);
-  //         } else if (!response) {
-  //           console.error('No response from content script');
-  //           showError('コンテンツスクリプトからの応答がありません');
-  //         } else if (!response.success) {
-  //           console.error('Generation failed:', response.error);
-  //           showError(`生成失敗: ${response.error || '不明なエラー'}`);
-  //         } else {
-  //           console.log(`${count}枚の画像生成が開始されました`);
-  //           showSuccess(`${count}枚の画像生成が開始されました`);
-  //         }
-  //       });
-  //     } else {
-  //       showError('アクティブなタブが見つかりません');
-  //     }
-  //   });
-  // }
 
   function showError(message) {
     console.error(message);

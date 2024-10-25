@@ -1,57 +1,108 @@
-# NaiPrompter
+# ChatGPT Prompter
 
-[日本語](README-ja.md)
+[English](README-en.md)
 
-NaiPrompter is a Chrome extension designed to enhance the user experience of NovelAI by providing additional functionality for image generation.
+ChatGPT Input Assistantは、ChatGPTのユーザー体験を向上させるために設計されたChrome拡張機能です。このツールは、入力支援機能を提供し、ChatGPTとのやり取りをより効率的で生産的にします。
 
-## Table of Contents
-- [NaiPrompter](#naiprompter)
-  - [Table of Contents](#table-of-contents)
-  - [Features](#features)
-  - [Installation](#installation)
-  - [Usage](#usage)
-  - [Contributing](#contributing)
-  - [Changelog](#changelog)
+## 目次
+- [ChatGPT Prompter](#chatgpt-prompter)
+  - [目次](#目次)
+  - [簡易説明](#簡易説明)
+  - [使用方法](#使用方法)
+  - [機能](#機能)
+  - [インストール方法](#インストール方法)
+  - [使用方法](#使用方法-1)
+  - [貢献について](#貢献について)
+  - [変更履歴](#変更履歴)
     - [20241015](#20241015)
     - [20240911](#20240911)
-  - [License](#license)
+  - [ライセンス](#ライセンス)
 
-## Features
-![Screenshot](images/screenshot.png)
+## 簡易説明
 
-- Generate multiple images at once
-- Save and manage custom styles
-- Temporary prompt and exclusion settings
-- Import and export styles
+ChatGPT Prompterは、以下の主要機能を提供します：
 
-## Installation
+1. **プロンプトの保存と管理**: よく使うプロンプトを保存し、簡単に再利用できます。
+2. **プロンプトの編集と削除**: 保存されたプロンプトを編集したり、不要なものを削除したりできます。
+3. **複数プロンプトの選択**: 複数のプロンプトを選択し、組み合わせて使用できます。
+4. **クイックプロンプト**: 頻繁に使用するプロンプトを素早く挿入できます。
+5. **一時プロンプト**: 一時的に使用するプロンプトを作成し、複数回実行できます。
+6. **プロンプトのインポート/エクスポート**: プロンプトをJSONファイルとしてエクスポートし、他のデバイスにインポートできます。
 
-1.  Download and unzip the ZIP file deployed in this repository release.
-2. Open Chrome and go to `chrome://extensions/`
-3. Enable "Developer mode" in the top right corner
-4. Click "Load unpacked" and select the folder containing the extension files
- 
-For more detailed usage instructions, please click on the help icon for the extension and view the help screen.
+## 使用方法
 
-## Usage
+1. **プロンプトの保存**:
+   - テキストエリアにプロンプトを入力します。
+   - 「保存」ボタンをクリックしてプロンプトを保存します。
 
-1. Click on the NaiPrompter icon in your Chrome toolbar
-2. Set the number of images you want to generate
-3. Click "Generate" to start the process
+2. **保存したプロンプトの使用**:
+   - 保存されたプロンプトのリストから使用したいプロンプトを選択します。
+   - 「適用」ボタンをクリックしてChatGPTの入力欄にプロンプトを挿入します。
+
+3. **プロンプトの編集/削除**:
+   - プロンプトの横にある編集アイコンをクリックして編集します。
+   - 削除アイコンをクリックしてプロンプトを削除します。
+
+4. **複数プロンプトの選択**:
+   - Ctrlキー（MacではCommandキー）を押しながら複数のプロンプトをクリックして選択します。
+   - 「適用」ボタンをクリックすると、選択したプロンプトが順番に挿入されます。
+
+5. **クイックプロンプトの使用**:
+   - 「クイックプロンプト」セクションにあるボタンをクリックして、事前定義されたプロンプトを素早く挿入します。
+
+6. **一時プロンプトの作成と複数回実行**:
+   - テキストエリアにプロンプトを入力します。
+   - 「回数」フィールドに実行回数を入力します。
+   - 「複数回実行」ボタンをクリックすると、指定した回数だけプロンプトが実行されます。
+
+7. **プロンプトのインポート/エクスポート**:
+   - 「エクスポート」ボタンをクリックして、保存されたプロンプトをJSONファイルとして保存します。
+   - 「インポート」ボタンをクリックして、JSONファイルからプロンプトをインポートします。
 
 
-## Contributing
+この拡張機能を使用することで、ChatGPTとのコミュニケーションがよりスムーズになり、生産性が向上します。
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+## 機能
+![スクリーンショット](images/screenshot.png)
 
-## Changelog
+- プロンプトの保存と管理
+- プロンプトの編集と削除
+- 複数プロンプトの選択と組み合わせ
+- クイックプロンプト機能
+- 一時プロンプトの作成と複数回実行
+- プロンプトのインポートとエクスポート
+- コンソール機能
+
+## インストール方法
+
+1. このリポジトリのリリースからZIPファイルをダウンロードして解凍します。
+2. Chromeブラウザを開き、`chrome://extensions/`に移動します。
+3. 右上の「デベロッパーモード」を有効にします。
+4. 「パッケージ化されていない拡張機能を読み込む」をクリックし、拡張機能ファイルが含まれているフォルダを選択します。
+
+詳細な使用方法については、拡張機能のヘルプアイコンをクリックしてヘルプ画面を参照してください。
+
+## 使用方法
+
+1. ChromeのツールバーにあるChatGPT Input Assistantアイコンをクリックします。
+2. 使用したいプロンプトを選択するか、新しいプロンプトを入力します。
+3. 「適用」ボタンをクリックしてプロンプトをChatGPTの入力欄に挿入します。
+4. 必要に応じて、chatGOTで実行などノボタンを活用します。
+
+詳細な使用方法については、[簡易説明](#簡易説明)セクションを参照してください。
+
+## 貢献について
+
+貢献を歓迎します！プルリクエストを自由に提出してください。バグ報告や機能リクエストなども大歓迎です。
+
+## 変更履歴
 
 ### 20241015
-Addition of a console, resolution of problems when running multiple times, and language support for English as standard
+コンソールの追加、複数回実行時の問題の解決、標準としての英語サポートの追加
 
 ### 20240911  
-For the first release, implementation of basic functions, saving and editing/deleting of styles, multiple selections and the ability to combine temporary prompts for quick prompt creation and multiple runs.
+初回リリース：基本機能の実装、スタイルの保存と編集/削除、複数選択、クイックプロンプト作成と複数回実行のための一時プロンプトの組み合わせ機能を提供
 
-## License
+## ライセンス
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+このプロジェクトはMITライセンスの下で公開されています。詳細は[LICENSE](LICENSE)ファイルを参照してください。
